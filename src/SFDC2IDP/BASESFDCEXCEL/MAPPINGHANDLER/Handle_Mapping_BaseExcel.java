@@ -153,9 +153,10 @@ public class Handle_Mapping_BaseExcel implements IMappingHandler {
 	public Handle_Mapping_BaseExcel execute() {
 		try {
 
-			IMappingSolver FileSolver = new MappingExeclFileSolver();
+			MappingExeclFileSolver FileSolver = new MappingExeclFileSolver();
 			HashMap<String, ArrayList<String>> IDPFields = FileSolver
 					.getIDPFields();
+			HashMap<String, ArrayList<String>> SfdcObjectNameS = FileSolver.getSfdcObjectNameS();
 			HashMap<String, ArrayList<String>> SFDCFields = FileSolver
 					.getSFDCFields();
 			HashMap<String, ArrayList<String>> IDPFieldTypes = FileSolver
@@ -173,6 +174,8 @@ public class Handle_Mapping_BaseExcel implements IMappingHandler {
 					ArrayList<String> idpFieldTypes = IDPFieldTypes
 							.get(tableName);
 					ArrayList<String> sfdcFileds = SFDCFields.get(objectName);
+					
+					ArrayList<String> SfdcobjectnameS = SfdcObjectNameS.get(objectName);
 					checkidpFiledIfExistInTABLE(idpFieldTypes, tableName);
 					String valuesString = "";
 					String filedsString = "";
@@ -189,7 +192,10 @@ public class Handle_Mapping_BaseExcel implements IMappingHandler {
 					for (int i = 0; i < idpFileds.size(); i++) {
 						String sfdcFiled = sfdcFileds.get(i).trim();
 						String idpFiled = idpFileds.get(i).trim();
-
+						String Sfdcobjectname = SfdcobjectnameS.get(i).trim();
+						if(!isInThisObject(Sfdcobjectname,objectName)){
+							sfdcFiled = Sfdcobjectname +"."+sfdcFiled;
+						}
 						// after all ; check duplicate
 						if (!salesforceObject.containsKey(objectName)) {
 							salesforceObject.put(objectName, new ArrayList());
@@ -311,7 +317,7 @@ public class Handle_Mapping_BaseExcel implements IMappingHandler {
 						mapping_out_schema_FractionString += CONSTANTS.out_schema_fraction_template
 								.replace("{keyWord}", idpFiled.toLowerCase());
 						// 6.dssSegmentMaker
-						dssSegmentMaker.makeDssSegment(tableName, idpFiled,
+						dssSegmentMaker.makeSegment(tableName, idpFiled,
 								idpFieldType, null,
 								i == idpFileds.size() - 1);
 					}
@@ -378,7 +384,12 @@ public class Handle_Mapping_BaseExcel implements IMappingHandler {
 						+ ",";
 
 			}
-			System.err.println(dssSegmentMaker.getResult());
+			String result ="";
+			for (String string : dssSegmentMaker.getResults().values()) {
+				result+=string;
+			}
+			System.err
+			.println(result);
 			System.err
 					.println("Totally Success object names are " + proxyNames);
 
@@ -387,6 +398,15 @@ public class Handle_Mapping_BaseExcel implements IMappingHandler {
 			e.printStackTrace();
 		}
 		return this;
+	}
+
+	private boolean isInThisObject(String sfdcobjectname, String objectName) {
+
+       if(sfdcobjectname.trim().equalsIgnoreCase(objectName.trim())||sfdcobjectname==null||sfdcobjectname.trim().equalsIgnoreCase("")){
+    	   return true;
+       }
+       System.err.println("sfdcobjectname = "+sfdcobjectname+" &&&&&&& objectName = "+objectName);
+		return false;
 	}
 
 	public Handle_Mapping_BaseExcel(Boolean checkFromFields,
@@ -449,6 +469,9 @@ public class Handle_Mapping_BaseExcel implements IMappingHandler {
 	}
 
 	private boolean checkidpFiledIfExistInIDP(String tableName, String filed) {
+		if(filed.contains(".")){
+			filed = filed.substring(filed.indexOf(".")+1);
+		}
 		HashMap<String, HashSet<String>> tables = sqlFileSolver
 				.getIDPFieldsLowCase();
 		HashSet<String> fields = tables.get((tableName + "_Temp").trim()
@@ -469,6 +492,9 @@ public class Handle_Mapping_BaseExcel implements IMappingHandler {
 
 	private boolean checkSoqlFiledIfExistInSalesforce(String objectName,
 			String filed) throws Exception {
+		if(filed.contains(".")){
+			filed = filed.substring(filed.indexOf(".")+1);
+		}
 		filed = filed.trim();
 
 		HashSet<String> fileds = Helper

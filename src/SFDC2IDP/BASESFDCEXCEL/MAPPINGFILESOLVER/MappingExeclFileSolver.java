@@ -68,7 +68,17 @@ public class MappingExeclFileSolver implements IMappingSolver {
 	private HashMap<String,ArrayList<String>> SFDCFields = new  HashMap<String,ArrayList<String>> ();
 	private HashMap<String,ArrayList<String>> IDPFields = new  HashMap<String,ArrayList<String>> ();
 	private HashMap<String,ArrayList<String>> IDPFieldTypes = new  HashMap<String,ArrayList<String>> ();
+	private HashMap<String,ArrayList<String>> sfdcObjectNameS = new  HashMap<String,ArrayList<String>> ();
 	private HashMap<String,String> tableName2ObjectName = new  HashMap<String,String> ();
+	
+	
+	public HashMap<String, ArrayList<String>> getSfdcObjectNameS() {
+		return sfdcObjectNameS;
+	}
+	public void setSfdcObjectNameS(
+			HashMap<String, ArrayList<String>> sfdcObjectNameS) {
+		this.sfdcObjectNameS = sfdcObjectNameS;
+	}
 	/* (non-Javadoc)
 	 * @see SFDC2IDP.BASE.COMMON.IMappingSolver#getTableName2ObjectName()
 	 */
@@ -114,6 +124,7 @@ public class MappingExeclFileSolver implements IMappingSolver {
 			 int sfdcFiledCol = -1;
 			 int idpFiledCol = -1;
 			 int idpFiledTypeCol = -1;
+			 int sfdcObjectNameCol = -1;
 //		  System.out.println("Table name : "+tableName);
 			for (int col = xssfRow.getFirstCellNum(); col <= xssfRow
 					.getLastCellNum(); col++) {
@@ -132,6 +143,9 @@ public class MappingExeclFileSolver implements IMappingSolver {
 				}
 				if (getValue(one).trim().equalsIgnoreCase("SFDC Field")) {
 					sfdcFiledCol = col;
+				}
+				if (getValue(one).trim().equalsIgnoreCase("SFDC Object")) {
+					sfdcObjectNameCol = col;
 				}
 				
 				if (getValue(one).trim().equalsIgnoreCase("IDP Field")) {
@@ -159,19 +173,23 @@ public class MappingExeclFileSolver implements IMappingSolver {
 			if(idpFiledTypeCol < 0){
 				System.err.println("table "+tableName+" is no data Type filed");
 			}
-			 SFDCFields.put(tableName2ObjectName.get(tableName), new ArrayList<String>());
+			SFDCFields.put(tableName2ObjectName.get(tableName), new ArrayList<String>());
+			sfdcObjectNameS.put(tableName2ObjectName.get(tableName), new ArrayList<String>());
 		
 			for (int rowNum = xssfSheet.getFirstRowNum()+1; rowNum <= xssfSheet
 					.getLastRowNum(); rowNum++) {
 				String SFDCField = getValue(xssfSheet.getRow(rowNum)!=null?xssfSheet.getRow(rowNum).getCell(sfdcFiledCol):null);
 				String IDPField = getValue(xssfSheet.getRow(rowNum)!=null?xssfSheet.getRow(rowNum).getCell(idpFiledCol):null);
 				String IDPFieldType = getValue(xssfSheet.getRow(rowNum)!=null?xssfSheet.getRow(rowNum).getCell(idpFiledTypeCol):null);
+				String sfdcObjectNameString = getValue(xssfSheet.getRow(rowNum)!=null?xssfSheet.getRow(rowNum).getCell(sfdcObjectNameCol):null);
 
 				if(!SFDCField.equalsIgnoreCase("")&&!IDPField.equals("")){
 					if(SFDCField.equalsIgnoreCase("")||IDPField.equals("")||(!SFDCField.trim().equalsIgnoreCase(IDPField.trim()) && !IDPField.trim().equalsIgnoreCase(SFDCField.trim()))){
 						System.err.println(tableName2ObjectName.get(tableName)+ " In Mapping Excel  :SFDCField="+SFDCField+"&IDPField="+IDPField);
 					}
 					 SFDCFields.get(tableName2ObjectName.get(tableName)).add(SFDCField);
+					 sfdcObjectNameS.get(tableName2ObjectName.get(tableName)).add(sfdcObjectNameString);
+					 
 					 IDPFields.get(tableName).add(IDPField);
 					 IDPFieldTypes.get(tableName).add(IDPFieldType);
 					 

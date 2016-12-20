@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.UUID;
 import java.util.Map.Entry;
 
 import SFDC2IDP.BASE.COMMON.CONSTANTS;
@@ -35,8 +36,11 @@ public void execute() throws Exception{
 			        String newXmlString1 = newXmlStrings[0].substring(0,newXmlStrings[0].lastIndexOf("<"));
 				    String newXmlString2 = newXmlStrings[1].substring(newXmlStrings[1].indexOf(">")+1,newXmlStrings[1].length());
 				    String initPath = "/_system/governance/repository/services/SFDC2TELE_"+SalesforceTableName+"/variables/query.global.latestdate\n";
-					Helper.writerFile(CONSTANTS.LOCAL_Results_BasePath+"/SFDC2TELE_"+SalesforceTableName+"/proxy.xml", initPath+newXmlString1+basicSoql+newXmlString2);
-				    Helper.writerFile(CONSTANTS.LOCAL_Results_BasePath+"/proxies/SFDC2TELE_"+SalesforceTableName+".xml", initPath+newXmlString1+basicSoql+newXmlString2);
+				    String proxyName = "SFDC2TELE_"+SalesforceTableName+"";
+
+				    Helper.writerFile(CONSTANTS.LOCAL_Results_BasePath+"/files/"+UUID.randomUUID()+".proxy.init.time",initPath);
+					Helper.writerFile(CONSTANTS.LOCAL_Results_BasePath+"/SFDC2TELE_"+SalesforceTableName+"/proxy.xml", proxyName+newXmlString1+basicSoql+newXmlString2);
+				    Helper.writerFile(CONSTANTS.LOCAL_Results_BasePath+"/proxies/SFDC2TELE_"+SalesforceTableName+".xml", proxyName+newXmlString1+basicSoql+newXmlString2);
 
 				} catch (Exception e) {
 					e.printStackTrace();

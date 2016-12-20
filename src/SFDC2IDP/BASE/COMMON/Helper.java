@@ -52,6 +52,7 @@ public class Helper {
 		while ((line = br.readLine()) != null) {
 			templateString += " " + line;
 		}
+		br.close();
 		return templateString = templateString.trim();
     }
     public static String getFileContent(File file) throws Exception{
@@ -62,6 +63,7 @@ public class Helper {
  		while ((line = br.readLine()) != null) {
  			templateString += " " + line;
  		}
+ 		br.close();
  		return templateString = templateString.trim();
      }
 	public static HashSet<String> getFieldNamesFromSalesForceByObjectName(

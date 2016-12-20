@@ -5,6 +5,7 @@ import java.util.HashMap;
 import edu.emory.mathcs.backport.java.util.Arrays;
 import SFDC2IDP.BASE.COMMON.CONSTANTS;
 import SFDC2IDP.BASE.COMMON.DSSTypeGetter;
+import SFDC2IDP.BASE.GENERATER.ISegmentMaker;
 import net.sf.saxon.s9api.ItemType;
 
 /**
@@ -27,9 +28,9 @@ import net.sf.saxon.s9api.ItemType;
  * @author litsoft
  *
  */
-public class DssSegmentMaker {
+public class DssSegmentMaker implements ISegmentMaker {
 private String result = "";
-private HashMap<String/*methodName*/,String> resultParts = new HashMap<String,String> ();
+private HashMap<String/*methodName*/,String> results = new HashMap<String,String> ();
 private String queryTemplate = "<query id=\"insert2sfdc_call_list_temp\" useConfig=\"ODH_MBG_SERVICE\">${queryContent}</query>";
 private String operAndCallTemplate = "<operation name=\"insert2sfdc_call_list_temp\" returnRequestStatus=\"true\"> <call-query href=\"insert2sfdc_call_list_temp\"> ${operAndCallContent}</call-query></operation>";
 private String queryContentTemplate0 = " <sql>{sqlContent}</sql>";
@@ -40,14 +41,18 @@ private String tempResult = "";
 private String tempQueryContent1 = "";
 private String tempOperAndCallContent = "";
 private HashMap<String,String> typeMap = new  HashMap<String,String>();
-public void makeDssSegment(String tableName, String idpFiled,
+/* (non-Javadoc)
+ * @see SFDC2IDP.BASE.SegmentMaker.ISegmentMaker#makeSegment(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean)
+ */
+@Override
+public void makeSegment(String tableName, String idpFiled,
 		String idpFiledType, String nullString, boolean end) {
 	String dssOperationName = ("Insert2"+tableName+"_Temp").trim().toLowerCase();
 	typeMap.put(idpFiledType.trim().toLowerCase(), null);
 	tempQueryContent1+=queryContentTemplate1.replace("id", idpFiled.trim().toLowerCase());
 	tempOperAndCallContent+=operAndCallContentTemplate.replace("id", idpFiled.trim().toLowerCase());
-     if(!resultParts.containsKey(dssOperationName)){
-    	 resultParts.put(dssOperationName, tempResult);
+     if(!results.containsKey(dssOperationName)){
+    	 results.put(dssOperationName, tempResult);
 	tempQueryContent1+=queryContentTemplate1.replace("id", CONSTANTS.mapping_batch_flag);
 //	tempQueryContent1+=queryContentTemplate1.replace("STRING", DSSTypeGetter.getTypeByString(idpFiledType));
 	tempOperAndCallContent+=operAndCallContentTemplate.replace("id",CONSTANTS.mapping_batch_flag);
@@ -58,7 +63,7 @@ public void makeDssSegment(String tableName, String idpFiled,
 		tempResult+=queryTemplate.replace("${queryContent}", queryContentTemplate0+tempQueryContent1);
 		tempResult+=operAndCallTemplate.replace("${operAndCallContent}", tempOperAndCallContent);
 		tempResult = tempResult.replace("insert2sfdc_call_list_temp", dssOperationName);
-		resultParts.put(dssOperationName, tempResult);
+		results.put(dssOperationName, tempResult);
 		tempResult = "";
 		tempQueryContent1 = "";
 		tempOperAndCallContent = "";
@@ -67,14 +72,13 @@ public void makeDssSegment(String tableName, String idpFiled,
 	
 }
 public void replaceSqlContent(String dssOperationName,String sqlContent) {
-	resultParts.put(dssOperationName.trim().toLowerCase(), resultParts.get(dssOperationName.trim().toLowerCase()).replace("{sqlContent}", sqlContent));
+	results.put(dssOperationName.trim().toLowerCase(), results.get(dssOperationName.trim().toLowerCase()).replace("{sqlContent}", sqlContent));
 }
-public String getResult() {
-	System.err.println(Arrays.toString(typeMap.keySet().toArray()));
-	for (String string : resultParts.values()) {
-		result+=string;
-	}
-	return result;
+/* (non-Javadoc)
+ * @see SFDC2IDP.BASE.SegmentMaker.ISegmentMaker#getResult()
+ */
+public HashMap<String, String> getResults() {
+	return results;
 }
 
 }

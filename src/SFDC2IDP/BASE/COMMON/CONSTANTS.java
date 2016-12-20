@@ -5,8 +5,8 @@ import java.util.Date;
 
 public class CONSTANTS {
 public static SimpleDateFormat dateformate = new SimpleDateFormat("yyyyMMdd");
-public static final String SFDC2IDP_Mapping_FilePath ="E:/lenovo-work/work/Salesforce2DB/SFDC2TELE_PROXY_GEN/resouces/SFDC IDP Mapping_20161213.xlsx";
-public static final String IDP_CreateTable_FilePath ="E:/lenovo-work/work/Salesforce2DB/SFDC2TELE_PROXY_GEN/resouces/database20161216.sql";
+public static final String SFDC2IDP_Mapping_FilePath ="E:/lenovo-work/work/Salesforce2DB/SFDC2TELE_PROXY_GEN/resouces/SFDC IDP Mapping_20161219.xlsx";
+public static final String IDP_CreateTable_FilePath ="E:/lenovo-work/work/Salesforce2DB/SFDC2TELE_PROXY_GEN/resouces/database20161220.sql";
 public static final String WSO2_Proxy_Template_FilePath ="E:/lenovo-work/work/Salesforce2DB/SFDC2TELE_PROXY_GEN/resouces/SFDC2TELE_Account.xml";
 public static final String WSO2_Mapping_In_Template_FilePath ="E:/lenovo-work/work/Salesforce2DB/SFDC2TELE_PROXY_GEN/resouces/datamapper_inputSchema.json";
 public static final String WSO2_Mapping_DCM_Template_FilePath ="E:/lenovo-work/work/Salesforce2DB/SFDC2TELE_PROXY_GEN/resouces/datamapper.dmc";

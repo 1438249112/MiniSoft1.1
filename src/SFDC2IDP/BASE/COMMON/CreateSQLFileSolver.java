@@ -81,7 +81,7 @@ public class CreateSQLFileSolver {
 				creatSqlString.indexOf("(") + 1, creatSqlString.length())
 				.trim();
 
-		String fields[] = fieldPart.split("NULL\\,");
+		String fields[] = fieldPart.split("NULL[^,]*,");
 //		System.out.println("fields count = " + fields.length);
 //		System.out.println("fields = " + Arrays.toString(fields));
 		for (String field : fields) {
