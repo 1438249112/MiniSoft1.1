@@ -8,4 +8,7 @@ public class AbstractResusltGenerater {
 			IMappingHandler handle_SFDC2IDP_Mapping) {
 		this.handle_SFDC2IDP_Mapping = handle_SFDC2IDP_Mapping;
 	}
+	public AbstractResusltGenerater() {
+		this.handle_SFDC2IDP_Mapping = handle_SFDC2IDP_Mapping;
+	}
 }

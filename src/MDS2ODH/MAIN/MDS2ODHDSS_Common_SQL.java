@@ -34,7 +34,7 @@ public static void main(String[] args) throws Exception {
 				filedsString ="("+  filedsString.substring(0, filedsString.length()-1)+")";
     		String insertSql = "insert into "+tableName+ filedsString +" values " + valuesString ;
     		
-    		System.out.println(insertSql);
+    		System.out.println(insertSql.toLowerCase());
 		}
 
      }
@@ -115,8 +115,7 @@ public static void main(String[] args) throws Exception {
 	}
 
 	public MDS2ODHDSS_Common_SQL() throws Exception {
-        File createSqlsFile = new File("E:/lenovo-work/work/MDS2ODH/database.sql");
-	      String createSqls = Helper.getFileContent(createSqlsFile);
+	      String createSqls = Helper.getFileContent(MDS2ODH.MAIN.CONSTANTS.sqlStructFilePath);
 	      String[] arrayCreateSqls = createSqls.split("CREATE TABLE");
 //			System.out.println(createSqls);
 			for (String creatSqlString : arrayCreateSqls) {
@@ -130,6 +129,7 @@ public static void main(String[] args) throws Exception {
 			}
 	}
 	private void parseSQL(String creatSqlString) {
+	
 		creatSqlString = creatSqlString.substring(0,
 				creatSqlString.lastIndexOf("NULL")).trim();
 		// 获取表名

@@ -129,8 +129,8 @@ public static void main(String[] args) throws Exception {
 	}
 
 	public MDS2ODHDSS_SQL() throws Exception {
-        File createSqlsFile = new File("E:/lenovo-work/work/MDS2ODH/database.sql");
-	      String createSqls = Helper.getFileContent(createSqlsFile);
+	      String createSqls = Helper.getFileContent(MDS2ODH.MAIN.CONSTANTS.sqlStructFilePath);
+
 	      String[] arrayCreateSqls = createSqls.split("CREATE TABLE");
 //			System.out.println(createSqls);
 			for (String creatSqlString : arrayCreateSqls) {

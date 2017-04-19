@@ -3,6 +3,7 @@ package SFDC2IDP.MAIN;
 import java.io.File;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.util.Map.Entry;
 import java.util.UUID;
 
 import SFDC2IDP.BASE.COMMON.CONSTANTS;
@@ -22,13 +23,16 @@ public class Main_Base_EXCEL {
 //		File f = new File(CONSTANTS.LOCAL_Results_BasePath+"/files/"+UUID.randomUUID()+".log");
 //		System.setErr(new PrintStream(f));
 		IMappingHandler handle = Handle_Mapping_BaseExcel_1.getInstance(false,false);
+		for (Entry<String, String> entry : CONSTANTS.colors.entrySet()) {
+			System.out.println(entry.getKey()+"="+entry.getValue());
+		}
 //		new GenerateDSS_SQL(handle).execute();
-		Helper.clearFiles(CONSTANTS.LOCAL_Results_BasePath+"/files/");
+//		Helper.clearFiles(CONSTANTS.LOCAL_Results_BasePath+"/files/");
 //		new GenerateMappingDMC(handle).execute();
-		new GenerateMappingIn_Schema(handle).execute();
+//		new GenerateMappingIn_Schema(handle).execute();
 //		new GenerateMappingOut_Schema(handle).execute();
-//		new GenerateProxy(handle).execute();
-//		new TestProxy(handle).execute();
+		new GenerateProxy(handle).execute();
+		new TestProxy(handle).execute();
 //		java.awt.Desktop.getDesktop().open(f);
 	}
 }

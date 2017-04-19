@@ -64,6 +64,8 @@ public class MDS2ODHDSS_Fragment implements IMappingSolver {
 					xmlFragment += cannotnull.replace("{id}",
 							idpFiled.toLowerCase());
 				}
+				
+				
 			}
 
 			System.out.println(xmlFragment);
@@ -184,9 +186,7 @@ public class MDS2ODHDSS_Fragment implements IMappingSolver {
 	}
 
 	public MDS2ODHDSS_Fragment() throws Exception {
-		File createSqlsFile = new File(
-				"E:/lenovo-work/work/MDS2ODH/database.sql");
-		String createSqls = Helper.getFileContent(createSqlsFile);
+	      String createSqls = Helper.getFileContent(MDS2ODH.MAIN.CONSTANTS.sqlStructFilePath);
 		String[] arrayCreateSqls = createSqls.split("CREATE TABLE");
 		// System.out.println(createSqls);
 		for (String creatSqlString : arrayCreateSqls) {

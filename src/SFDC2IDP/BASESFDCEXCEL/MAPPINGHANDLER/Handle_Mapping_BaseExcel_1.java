@@ -243,40 +243,21 @@ public class Handle_Mapping_BaseExcel_1 implements IMappingHandler {
 
 						// 3.mappingFraction
 						String idpFieldType = idpFieldTypes.get(i);
+//						String sfdfFieldType = idpFieldTypes.get(i);
 						// datetime_formate;decimal_fromate;int_fromate;
 						if (true) {
-							
+							String filedInfo = "\"[fieldName="+sfdcFiled+",fieldType="+idpFieldType+"]\"";
 							if (idpFieldType.trim().toLowerCase()
-									.contains("datetime")) {
-								mappingFractionString += CONSTANTS.outputObjectSuffix
-										+ idpFiled.toLowerCase()
-										+ " = "
-										+ CONSTANTS.mapping_function_datetime_formate
-										+ "("
-										+ CONSTANTS.inputObjectSuffix
-										+ sfdcFiled + ");";
+									.contains("date")) {
+								mappingFractionString += addMappingFunction(idpFiled,sfdcFiled,CONSTANTS.mapping_function_datetime_formate,filedInfo);
 
 							} else if (idpFieldType.trim().toLowerCase()
 									.contains("int")) {
-
-								mappingFractionString += CONSTANTS.outputObjectSuffix
-										+ idpFiled.toLowerCase()
-										+ " ="
-										+ CONSTANTS.mapping_function_int_fromate
-										+ "("
-										+ CONSTANTS.inputObjectSuffix
-										+ sfdcFiled + ");";
+								mappingFractionString += addMappingFunction(idpFiled,sfdcFiled,CONSTANTS.mapping_function_int_fromate,filedInfo);
 
 							} else if (idpFieldType.trim().toLowerCase()
 									.contains("decimal")) {
-
-								mappingFractionString += CONSTANTS.outputObjectSuffix
-										+ idpFiled.toLowerCase()
-										+ " =	"
-										+ CONSTANTS.mapping_function_decimal_fromate
-										+ "("
-										+ CONSTANTS.inputObjectSuffix
-										+ sfdcFiled + ");";
+								mappingFractionString += addMappingFunction(idpFiled,sfdcFiled,CONSTANTS.mapping_function_decimal_fromate,filedInfo);
 
 							} else if (idpFieldType.trim().toLowerCase()
 									.contains("decimail")) {
@@ -285,15 +266,7 @@ public class Handle_Mapping_BaseExcel_1 implements IMappingHandler {
 								    System.err.println("need changed mapper table name = "+tableName);
 								}
 									dealed = true;
-							
-                         
-								mappingFractionString += CONSTANTS.outputObjectSuffix
-										+ idpFiled.toLowerCase()
-										+ " =	"
-										+ CONSTANTS.mapping_function_decimal_fromate
-										+ "("
-										+ CONSTANTS.inputObjectSuffix
-										+ sfdcFiled + ");";
+									mappingFractionString += addMappingFunction(idpFiled,sfdcFiled,CONSTANTS.mapping_function_decimal_fromate,filedInfo);
 
 							}else if (idpFiled.trim().toLowerCase()
 									.contains(CONSTANTS.mapping_batch_flag)) {
@@ -378,10 +351,29 @@ public class Handle_Mapping_BaseExcel_1 implements IMappingHandler {
 
 			String proxyNames = "";
 			for (String tableName : tableNames) {
-				proxyNames += "SFDC2TELE_" + tableName.replace("SFDC_", "")
+				proxyNames += "http://elb.wso2.lenovo.com:8080/esb/services/SFDC2TELE_" + tableName.replace("SFDC_", "")
 						+ ",";
 
 			}
+			String clearSqls = "";
+			for (String tableName : tableNames) {
+				clearSqls += "delete from " + tableName+"_TEMP;";
+
+			}
+			String clearPROXYs = "";
+			for (String tableName : tableNames) {
+				clearPROXYs += "mc.getConfiguration().getRegistry().updateResource"
+						+ "(\"gov:/repository/services/SFDC2TELE_Account/variables/query.global.latestdate\",\"0\");"
+						.replace("Account", tableName.replace("SFDC_", ""));
+
+			}
+			String selectAllSqls = "";
+			for (String tableName : tableNames) {
+				selectAllSqls += "select count(*) "+ tableName+"_TEMP from " + tableName+"_TEMP;";
+
+			}
+			
+			
 			String result ="";
 			for (String string : dssSegmentMaker.getResults().values()) {
 				result+=string;
@@ -389,13 +381,33 @@ public class Handle_Mapping_BaseExcel_1 implements IMappingHandler {
 			System.err
 			.println(result);
 			System.err
-					.println("Totally Success object names are " + proxyNames);
+					.println("Totally Success URL :" + proxyNames);
+			System.err
+			.println("clear Sql : " + clearSqls);
+			System.err
+			.println("select Sql : " + selectAllSqls);
+
+			System.err
+			.println("clear prxoy : " + clearPROXYs);
 
 		} catch (Exception e) {
 			System.err.println("处理excel解析后的数据出错");
 			e.printStackTrace();
 		}
 		return this;
+	}
+
+	private String addMappingFunction(String fromField,String toFiled,String function,String msg ) {
+		
+		return  CONSTANTS.outputObjectSuffix
+				+ fromField.toLowerCase()
+				+ " ="
+				+ function
+				+ "("
+				+ CONSTANTS.inputObjectSuffix
+				+ toFiled + ","
+				+ CONSTANTS.inputObjectSuffix
+				+ "Id" +","+msg+");";
 	}
 
 	private boolean isInThisObject(String sfdcobjectname, String objectName) {
@@ -467,7 +479,10 @@ public class Handle_Mapping_BaseExcel_1 implements IMappingHandler {
 	}
 
 	private boolean checkidpFiledIfExistInIDP(String tableName, String filed) {
+	
 		if(filed.contains(".")){
+			String  objectName = filed.substring(0,filed.indexOf("."));
+			tableName = tableName2ObjectName.get(objectName);
 			filed = filed.substring(filed.indexOf(".")+1);
 		}
 		HashMap<String, HashSet<String>> tables = sqlFileSolver
@@ -491,6 +506,7 @@ public class Handle_Mapping_BaseExcel_1 implements IMappingHandler {
 	private boolean checkSoqlFiledIfExistInSalesforce(String objectName,
 			String filed) throws Exception {
 		if(filed.contains(".")){
+			objectName = filed.substring(0,filed.indexOf("."));
 			filed = filed.substring(filed.indexOf(".")+1);
 		}
 		filed = filed.trim();

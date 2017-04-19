@@ -1,0 +1,44 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1441823466319
+Build-Jdk: 1.7.0_75
+Built-By: wso2-builder
+Bundle-Description: All the samples in WSO2 Enterprise Service Bus
+Bundle-DocURL: http://wso2.com
+Bundle-License: http://www.apache.org/licenses/LICENSE-2.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.wso2.esb.samples
+Bundle-SymbolicName: org.wso2.esb.samples
+Bundle-Vendor: WSO2 Inc
+Bundle-Version: 4.9.0
+Created-By: Apache Maven Bundle Plugin
+DynamicImport-Package: *
+Export-Package: samples.common;version="4.9.0";uses:="org.apache.axiom.o
+ m",samples.mediators;version="4.9.0";uses:="org.apache.synapse,org.apac
+ he.synapse.mediators",samples.mediators.extensions;version="4.9.0";uses
+ :="org.apache.synapse,org.apache.synapse.mediators",samples.userguide;v
+ ersion="4.9.0";uses:="javax.jms,javax.security.auth.callback,org.apache
+ .axiom.om,org.apache.axis2,org.apache.axis2.client.async,org.apache.axi
+ s2.context,org.apache.synapse.config",samples.util;version="4.9.0"
+Import-Package: javax.activation;resolution:=optional;version="[1.1,2)",
+ javax.jms;resolution:=optional,javax.naming;resolution:=optional,javax.
+ security.auth.callback;resolution:=optional,javax.xml.namespace;resolut
+ ion:=optional,javax.xml.stream;resolution:=optional;version="[1.0,2)",o
+ rg.apache.axiom.attachments;resolution:=optional,org.apache.axiom.om;re
+ solution:=optional,org.apache.axiom.om.impl.builder;resolution:=optiona
+ l,org.apache.axiom.om.util;resolution:=optional,org.apache.axiom.om.xpa
+ th;resolution:=optional,org.apache.axiom.soap;resolution:=optional,org.
+ apache.axiom.soap.impl.builder;resolution:=optional,org.apache.axiom.ut
+ il;resolution:=optional,org.apache.axis2;resolution:=optional,org.apach
+ e.axis2.addressing;resolution:=optional,org.apache.axis2.client;resolut
+ ion:=optional,org.apache.axis2.client.async;resolution:=optional,org.ap
+ ache.axis2.clustering;resolution:=optional,org.apache.axis2.context;res
+ olution:=optional,org.apache.axis2.description;resolution:=optional,org
+ .apache.axis2.engine;resolution:=optional,org.apache.axis2.transport.ht
+ tp;resolution:=optional,org.apache.axis2.util;resolution:=optional,org.
+ apache.commons.logging;resolution:=optional,org.apache.neethi;resolutio
+ n:=optional,org.apache.sandesha2.client;resolution:=optional,org.apache
+ .synapse;resolution:=optional,org.apache.synapse.config;resolution:=opt
+ ional,org.apache.synapse.mediators;resolution:=optional,org.apache.ws.s
+ ecurity;resolution:=optional;version="[1.5,2)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.5))"
+Tool: Bnd-2.4.1.201501161923

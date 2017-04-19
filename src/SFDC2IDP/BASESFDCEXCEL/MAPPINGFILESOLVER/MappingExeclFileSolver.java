@@ -101,6 +101,7 @@ public class MappingExeclFileSolver implements IMappingSolver {
 		return tableNames;
 	}
 
+
 	public MappingExeclFileSolver() throws Exception {
 		init();
 		InputStream is = new FileInputStream(CONSTANTS.SFDC2IDP_Mapping_FilePath);
@@ -114,6 +115,9 @@ public class MappingExeclFileSolver implements IMappingSolver {
 			// 获取当前工作薄的每一行
 			String tableName = xssfSheet.getSheetName();
 			if(successProxy.contains(tableName.trim().toLowerCase())){
+				continue;
+			}
+			if(!dealTableNames.isEmpty()&&!dealTableNames.contains(tableName.trim().toLowerCase())){
 				continue;
 			}
 			
@@ -133,6 +137,7 @@ public class MappingExeclFileSolver implements IMappingSolver {
 					for (int rowNum = xssfSheet.getFirstRowNum()+1; rowNum <= xssfSheet
 							.getLastRowNum(); rowNum++) {
 						XSSFCell cell = xssfSheet.getRow(rowNum)!=null?xssfSheet.getRow(rowNum).getCell(col):null;
+					
 						String ObjectName = getValue(cell);
 						if(ObjectName!=null && !ObjectName.trim().equals("") && !ObjectName.trim().equals("SFDC Object")){
 							 tableName2ObjectName.put(tableName, getValue(cell));
@@ -182,7 +187,21 @@ public class MappingExeclFileSolver implements IMappingSolver {
 				String IDPField = getValue(xssfSheet.getRow(rowNum)!=null?xssfSheet.getRow(rowNum).getCell(idpFiledCol):null);
 				String IDPFieldType = getValue(xssfSheet.getRow(rowNum)!=null?xssfSheet.getRow(rowNum).getCell(idpFiledTypeCol):null);
 				String sfdcObjectNameString = getValue(xssfSheet.getRow(rowNum)!=null?xssfSheet.getRow(rowNum).getCell(sfdcObjectNameCol):null);
-
+				try {
+//					String color	= xssfSheet.getRow(rowNum).getCell(sfdcFiledCol).getCellStyle().getFont().getColor()+"";
+					boolean isDelete	= xssfSheet.getRow(rowNum).getCell(sfdcFiledCol).getCellStyle().getFont().getStrikeout();
+					if(isDelete){
+						continue;
+					}
+//					if(CONSTANTS.colors.containsKey(color)){
+//						CONSTANTS.colors.put(color, (Integer.valueOf(CONSTANTS.colors.get(color).split(";")[0])+1)+";"+CONSTANTS.colors.get(color).split(";")[1]+SFDCField+",");
+//					}else{
+//						CONSTANTS.colors.put(color,"0;start");
+//					}
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			
 				if(!SFDCField.equalsIgnoreCase("")&&!IDPField.equals("")){
 					if(SFDCField.equalsIgnoreCase("")||IDPField.equals("")||(!SFDCField.trim().equalsIgnoreCase(IDPField.trim()) && !IDPField.trim().equalsIgnoreCase(SFDCField.trim()))){
 						System.err.println(tableName2ObjectName.get(tableName)+ " In Mapping Excel  :SFDCField="+SFDCField+"&IDPField="+IDPField);
@@ -199,12 +218,29 @@ public class MappingExeclFileSolver implements IMappingSolver {
 	
 	}
 	private HashSet<String> successProxy = new HashSet<String> ();
+	private HashSet<String> dealTableNames = new HashSet<String> ();
 	private void init() {
-//		successProxy.add("SFDC_Account".toLowerCase());
-//		successProxy.add("SFDC_Call_List".toLowerCase());
-//		successProxy.add("SFDC_Contact".toLowerCase());
-//		successProxy.add("SFDC_AccountTeamMembe".toLowerCase());
+		try {
+			for (String tableName : CONSTANTS.skipDealTableNames.split(",")) {
+				successProxy.add(tableName.trim().toLowerCase());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+		try {
+			for (String tableName : CONSTANTS.dealTableNames.split(",")) {
+				if(tableName!=null && !tableName.equalsIgnoreCase("") ){
+					dealTableNames.add(tableName.trim().toLowerCase());	
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
 	}
+	
+	
+
+	
 	// 转换数据格式
 	private String getValue(XSSFCell xssfRow) {
 		String result = "";

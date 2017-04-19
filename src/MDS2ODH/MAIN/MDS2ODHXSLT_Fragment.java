@@ -26,7 +26,8 @@ public class MDS2ODHXSLT_Fragment implements IMappingSolver {
 			String integerTemplate = " <param defaultValue=\"#{NULL}\" name=\"{attribute_name}\" sqlType=\"INTEGER\"/>";
 			String bigintTemplate = " <param defaultValue=\"#{NULL}\" name=\"{attribute_name}\" sqlType=\"BIGINT\"/>";
 			String stringTemplate = " <param defaultValue=\"#{NULL}\" name=\"{attribute_name}\" sqlType=\"STRING\"/>";
-
+			String numericTemplate = " <param defaultValue=\"#{NULL}\" name=\"{attribute_name}\" sqlType=\"NUMERIC\"/>";
+			
 			ArrayList<String> idpFileds = odhforms.getValue();
 			for (int j = 0; j < idpFileds.size(); j++) {
 				String idpFiled = idpFileds.get(j);
@@ -49,6 +50,9 @@ public class MDS2ODHXSLT_Fragment implements IMappingSolver {
 							idpFiled.toLowerCase());
 				} else if (type.contains("int8")) {
 					xmlFragment += bigintTemplate.replace("{attribute_name}",
+							idpFiled.toLowerCase());
+				} else if (type.contains("numeric")) {
+					xmlFragment += numericTemplate.replace("{attribute_name}",
 							idpFiled.toLowerCase());
 				} else {
 					xmlFragment += stringTemplate.replace("{attribute_name}",
@@ -174,9 +178,8 @@ public class MDS2ODHXSLT_Fragment implements IMappingSolver {
 	}
 
 	public MDS2ODHXSLT_Fragment() throws Exception {
-		File createSqlsFile = new File(
-				"E:/lenovo-work/work/MDS2ODH/database.sql");
-		String createSqls = Helper.getFileContent(createSqlsFile);
+	      String createSqls = Helper.getFileContent(MDS2ODH.MAIN.CONSTANTS.sqlStructFilePath);
+
 		String[] arrayCreateSqls = createSqls.split("CREATE TABLE");
 		// System.out.println(createSqls);
 		for (String creatSqlString : arrayCreateSqls) {

@@ -2,7 +2,12 @@
     <wb-module deploy-name="MiniSoft1.1">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/StreamStrust2XML"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/concat-properties"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/ToSQL"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/APIMannager"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/TextDataFilter"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/JSON"/>
         <property name="java-output-path" value="/MiniSoft1.1/build/classes"/>
         <property name="context-root" value="MiniSoft1.1"/>
     </wb-module>

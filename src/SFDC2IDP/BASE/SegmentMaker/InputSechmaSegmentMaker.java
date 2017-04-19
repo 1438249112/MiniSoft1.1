@@ -16,6 +16,7 @@ public  String inner_schema ="\"${childTableName}\":{ \"id\":\"http://wso2jsonsc
 		+ "\"properties\":{ \"attributes\":{ \"id\":\"http://wso2jsonschema.org/records/0/${childTableName}/attributes\", \"type\":\"object\","
 		+ " \"properties\":{ \"type\":{ \"id\":\"http://wso2jsonschema.org/records/0/${childTableName}/attributes/type\", \"type\":\"string\" },"
 		+ " \"url\":{ \"id\":\"http://wso2jsonschema.org/records/0/${childTableName}/attributes/url\", \"type\":\"string\" } } },"
+		+ "\"Id\": { \"id\": \"http://wso2jsonschema.org/records/0/${childTableName}/Id\", \"type\": \"string\" },"
 		+ " ${inner_schema_child} } },";
 
 public  String inner_schema_child =" \"{keyWord}\":{ \"id\":\"http://wso2jsonschema.org/records/0/${childTableName}/{keyWord}\", \"type\":\"string\" },";
@@ -36,8 +37,11 @@ public void makeSegment(String resultKey, String idpFiled,
  	if(sfdcFiled.contains(".")){
 		String field = sfdcFiled.substring(sfdcFiled.indexOf(".")+1);
 		String childTableName = sfdcFiled.substring(0,sfdcFiled.indexOf("."));
-		inner_schema_childStrings.put(resultKey+childTableName,(inner_schema_childStrings.get(resultKey+childTableName)==null?"":inner_schema_childStrings.get(resultKey+childTableName))+inner_schema_child.replace("${childTableName}", childTableName).replace("{keyWord}", field));
-		childrenMap.put(resultKey+childTableName, inner_schema.replace("${childTableName}", childTableName));
+		if(!field.trim().equalsIgnoreCase("id")){
+			inner_schema_childStrings.put(resultKey+childTableName,(inner_schema_childStrings.get(resultKey+childTableName)==null?"":inner_schema_childStrings.get(resultKey+childTableName))+inner_schema_child.replace("${childTableName}", childTableName).replace("{keyWord}", field));
+			childrenMap.put(resultKey+childTableName, inner_schema.replace("${childTableName}", childTableName));
+		}
+		
 	}else{
 		resultPart+= CONSTANTS.in_schema_fraction_template.replace("{keyWord}", sfdcFiled);
 	}
@@ -55,6 +59,7 @@ public void makeSegment(String resultKey, String idpFiled,
 
 		}
 		resultPart+= inner_schema_String;
+		resultPart = resultPart.substring(0,resultPart.length()-1);
 	     childrenMap.clear();
 	      inner_schema_childStrings.clear();
 	

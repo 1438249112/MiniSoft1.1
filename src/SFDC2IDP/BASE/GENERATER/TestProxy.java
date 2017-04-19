@@ -46,7 +46,7 @@ for (int i = 0; i <1; i++) {
 				String line = "";
 				String resultString= "";
 				while ((line = br.readLine()) != null) {
-					if(line.contains("SUCCESSFUL")){
+					if(line.contains("SUCCESSFUL。。。。。。。")){
 						state.put(SalesforceTableName, true);
 //						System.out
 //						.println("SFDC2TELE_"+SalesforceTableName +": SUCCESSFUL");

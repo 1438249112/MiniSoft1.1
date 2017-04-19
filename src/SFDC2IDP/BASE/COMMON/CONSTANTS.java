@@ -2,11 +2,17 @@ package SFDC2IDP.BASE.COMMON;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 public class CONSTANTS {
+public static final String skipDealTableNames ="SFDC_Account1,SFDC_CustomerHasIT1";
+public static final String dealTableNames ="";
+public static HashMap<String,String> colors = new HashMap<String,String> ();
+//public static final String dealTableNames ="SFDC_CustomerHasIT,SFDC_Account,SFDC_Contact,SFDC_LinkmanFamliylink";
+
 public static SimpleDateFormat dateformate = new SimpleDateFormat("yyyyMMdd");
-public static final String SFDC2IDP_Mapping_FilePath ="E:/lenovo-work/work/Salesforce2DB/SFDC2TELE_PROXY_GEN/resouces/SFDC IDP Mapping_20161219.xlsx";
-public static final String IDP_CreateTable_FilePath ="E:/lenovo-work/work/Salesforce2DB/SFDC2TELE_PROXY_GEN/resouces/database20161220.sql";
+public static final String SFDC2IDP_Mapping_FilePath ="E:/lenovo-work/work/Salesforce2DB/SFDC2TELE_PROXY_GEN/resouces/SFDC IDP Mapping_20170222.xlsx";
+public static final String IDP_CreateTable_FilePath ="E:/lenovo-work/work/Salesforce2DB/SFDC2TELE_PROXY_GEN/resouces/database20170222.sql";
 public static final String WSO2_Proxy_Template_FilePath ="E:/lenovo-work/work/Salesforce2DB/SFDC2TELE_PROXY_GEN/resouces/SFDC2TELE_Account.xml";
 public static final String WSO2_Mapping_In_Template_FilePath ="E:/lenovo-work/work/Salesforce2DB/SFDC2TELE_PROXY_GEN/resouces/datamapper_inputSchema.json";
 public static final String WSO2_Mapping_DCM_Template_FilePath ="E:/lenovo-work/work/Salesforce2DB/SFDC2TELE_PROXY_GEN/resouces/datamapper.dmc";
