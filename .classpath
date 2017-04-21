@@ -7,6 +7,7 @@
 	<classpathentry kind="src" path="APIMannager"/>
 	<classpathentry kind="src" path="TextDataFilter"/>
 	<classpathentry kind="src" path="JSON"/>
+	<classpathentry kind="src" path="Abbreviations"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
@@ -30,5 +31,6 @@
 	<classpathentry exported="true" kind="var" path="ECLIPSE_WORKSPACE/.metadata/.plugins/org.wso2.developerstudio.eclipse.libraries/lib/XmlSchema_1.4.7.wso2v3.jar"/>
 	<classpathentry exported="true" kind="var" path="ECLIPSE_WORKSPACE/.metadata/.plugins/org.wso2.developerstudio.eclipse.libraries/lib/woden_1.0.0.M9-wso2v1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/fastjson-1.2.28.jar"/>
+	<classpathentry kind="lib" path="build/jintellitype-1.3.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

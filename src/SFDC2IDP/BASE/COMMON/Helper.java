@@ -7,7 +7,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -23,6 +25,27 @@ import org.apache.http.impl.client.ContentEncodingHttpClient;
  *
  */
 public class Helper {
+	public static boolean isNotNull(String string) {
+		  if(string==null || string.trim().equalsIgnoreCase("")){
+			  return false;
+		  }
+		return true;
+
+	}
+	public static HashMap<String,SimpleDateFormat> dateformates = new HashMap<String,SimpleDateFormat>();
+	public static String getTimeFlag(String datePattern) {
+		SimpleDateFormat dateformate = null;
+		if(dateformates.containsKey(datePattern)){
+			dateformate =  dateformates.get(datePattern);
+		}else{
+			dateformate = new SimpleDateFormat(datePattern);
+			dateformates.put(datePattern, dateformate);
+		}
+		
+		return dateformate.format(new Date());
+	}
+	
+	
 	public static String getRespond(String url) {
 		String resultString = "";
 		try {
