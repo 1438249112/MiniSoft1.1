@@ -11,20 +11,20 @@ public static HashMap<String,String> colors = new HashMap<String,String> ();
 //public static final String dealTableNames ="SFDC_CustomerHasIT,SFDC_Account,SFDC_Contact,SFDC_LinkmanFamliylink";
 
 public static SimpleDateFormat dateformate = new SimpleDateFormat("yyyyMMdd");
-public static final String SFDC2IDP_Mapping_FilePath ="E:/lenovo-work/work/Salesforce2DB/SFDC2TELE_PROXY_GEN/resouces/SFDC IDP Mapping_20170222.xlsx";
-public static final String IDP_CreateTable_FilePath ="E:/lenovo-work/work/Salesforce2DB/SFDC2TELE_PROXY_GEN/resouces/database20170222.sql";
-public static final String WSO2_Proxy_Template_FilePath ="E:/lenovo-work/work/Salesforce2DB/SFDC2TELE_PROXY_GEN/resouces/SFDC2TELE_Account.xml";
-public static final String WSO2_Mapping_In_Template_FilePath ="E:/lenovo-work/work/Salesforce2DB/SFDC2TELE_PROXY_GEN/resouces/datamapper_inputSchema.json";
-public static final String WSO2_Mapping_DCM_Template_FilePath ="E:/lenovo-work/work/Salesforce2DB/SFDC2TELE_PROXY_GEN/resouces/datamapper.dmc";
+public static final String SFDC2IDP_Mapping_FilePath ="E:/lenovo-work/work/Salesforce2IDP/sunxiao/SFDC2TELE_PROXY_GEN/resouces/SFDC IDP Mapping.xlsx";
+public static final String IDP_CreateTable_FilePath ="E:/lenovo-work/work/Salesforce2IDP/sunxiao/SFDC2TELE_PROXY_GEN/resouces/database.sql";
+public static final String WSO2_Proxy_Template_FilePath ="E:/lenovo-work/work/Salesforce2IDP/sunxiao/SFDC2TELE_PROXY_GEN/resouces/SFDC2TELE_Account.xml";
+public static final String WSO2_Mapping_In_Template_FilePath ="E:/lenovo-work/work/Salesforce2IDP/sunxiao/SFDC2TELE_PROXY_GEN/resouces/datamapper_inputSchema.json";
+public static final String WSO2_Mapping_DCM_Template_FilePath ="E:/lenovo-work/work/Salesforce2IDP/sunxiao/SFDC2TELE_PROXY_GEN/resouces/datamapper.dmc";
 
-public static final String WSO2_Mapping_Out_Template_FilePath ="E:/lenovo-work/work/Salesforce2DB/SFDC2TELE_PROXY_GEN/resouces/datamapper_outputSchema.json";
+public static final String WSO2_Mapping_Out_Template_FilePath ="E:/lenovo-work/work/Salesforce2IDP/sunxiao/SFDC2TELE_PROXY_GEN/resouces/datamapper_outputSchema.json";
 
-public static  String LOCAL_Results_BasePath ="E:/lenovo-work/work/Salesforce2DB/SFDC2TELE_PROXY_GEN/result_files_20161213";
+public static  String LOCAL_Results_BasePath ="";
   static {   
-	CONSTANTS.LOCAL_Results_BasePath = "E:/lenovo-work/work/Salesforce2DB/SFDC2TELE_PROXY_GEN/result_files_"+dateformate.format(new Date());
+	CONSTANTS.LOCAL_Results_BasePath = "E:/lenovo-work/work/Salesforce2IDP/sunxiao/SFDC2TELE_PROXY_GEN/result_files_"+dateformate.format(new Date());
 	}
 
-public static final String WSO2_XSLT_Template_FilePath ="E:/lenovo-work/work/Salesforce2DB/SFDC2TELE_PROXY_GEN/resouces/SFDC2TELE_Account.xslt";
+public static final String WSO2_XSLT_Template_FilePath ="E:/lenovo-work/work/Salesforce2IDP/sunxiao/SFDC2TELE_PROXY_GEN/resouces/SFDC2TELE_Account.xslt";
 public static final String WSO2_SFDCObjectStruct_URL ="https://soa-test.lenovo.com/esb2/services/POC_SFDC2IDP_GetStructure/";
 
 //params in DCM file

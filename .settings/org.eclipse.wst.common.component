@@ -6,9 +6,15 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/concat-properties"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/ToSQL"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/APIMannager"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/TextDataFilter"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/JSON"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/Abbreviations"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/CreatePath"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/IntegrateSAP"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/DateTransform"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/Common"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/SFDC2UDP"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/TimeConvert"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/CommonEXETool"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/ODH2SFDC"/>
         <property name="java-output-path" value="/MiniSoft1.1/build/classes"/>
         <property name="context-root" value="MiniSoft1.1"/>
     </wb-module>

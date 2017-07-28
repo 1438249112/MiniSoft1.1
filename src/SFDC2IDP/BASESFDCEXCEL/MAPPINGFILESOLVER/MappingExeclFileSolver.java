@@ -112,6 +112,9 @@ public class MappingExeclFileSolver implements IMappingSolver {
 			if (xssfSheet == null) {
 				continue;
 			}
+			if (xssfWorkbook.isSheetHidden(numSheet) == true) {
+				continue;
+			}
 			// 获取当前工作薄的每一行
 			String tableName = xssfSheet.getSheetName();
 			if(successProxy.contains(tableName.trim().toLowerCase())){

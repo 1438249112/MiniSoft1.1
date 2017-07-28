@@ -1,5 +1,10 @@
 package SFDC2IDP.BASE.COMMON;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,15 +21,24 @@ import java.util.HashSet;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.ContentEncodingHttpClient;
+import org.apache.poi.ss.formula.functions.T;
 
 /**
  *
- * ÒÀÀµ commons-httpclient-3.1.jar commons-codec-1.4.jar
+ * ï¿½ï¿½ï¿½ï¿½ commons-httpclient-3.1.jar commons-codec-1.4.jar
  * 
  * @author tianjun
  *
  */
+
 public class Helper {
+	public static String getArrayValue(String[] strings,Integer index) {
+		 if(index < strings.length){
+			 return strings[index];
+		 }
+		return null;
+
+	}
 	public static boolean isNotNull(String string) {
 		  if(string==null || string.trim().equalsIgnoreCase("")){
 			  return false;
@@ -45,6 +59,26 @@ public class Helper {
 		return dateformate.format(new Date());
 	}
 	
+	public static String getClipboardText() {
+        Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();//ï¿½ï¿½È¡ÏµÍ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        // ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ð°ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½
+        Transferable clipT = clip.getContents(null);
+        String result = "";
+        if (clipT != null) {
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½
+        if (clipT.isDataFlavorSupported(DataFlavor.stringFlavor))
+			try {
+				result = (String)clipT.getTransferData(DataFlavor.stringFlavor);
+			} catch (UnsupportedFlavorException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+        }
+        return result;
+    }
 	
 	public static String getRespond(String url) {
 		String resultString = "";
@@ -70,7 +104,8 @@ public class Helper {
 	}
 
 	public static void writerFile(String filePath, String content)
-			throws Exception {
+			 {
+//		System.out.println(filePath);
 		File resultFile = new File(filePath);
 		if (!resultFile.getParentFile().exists()) {
 			resultFile.getParentFile().mkdirs();
@@ -78,15 +113,32 @@ public class Helper {
 		if (resultFile.exists()) {
 			resultFile.delete();
 		}
-		resultFile.createNewFile();
-		FileWriter fileWriter = new FileWriter(resultFile);
-		fileWriter.append(content);
-		fileWriter.flush();
-		fileWriter.close();
+		try {
+			resultFile.createNewFile();
+			FileWriter fileWriter = new FileWriter(resultFile);
+			fileWriter.append(content);
+			fileWriter.flush();
+			fileWriter.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
 	}
 
 	public static void main(String[] args) {
-		Helper.getFieldNamesFromSalesForceByObjectName("Contact", true);
+		System.out.println(Helper.getClipboardText());
+	}
+	
+	public static String getClipOrFileContent(String filePath) throws Exception {
+		// 2.2.ï¿½ï¿½È¡Ä£ï¿½ï¿½ï¿½Ä¼ï¿½
+		String result = "";
+		result = Helper.getClipboardText();
+		if(!Helper.isNotNull(result)){
+			result = getFileContent(filePath);
+		}
+		
+		return result;
 	}
 
 	private static HashMap<String, HashSet<String>> results = new HashMap<String, HashSet<String>>();
@@ -97,7 +149,7 @@ public class Helper {
 	}
 
 	public static String getFileContent(String filePath,String LineSplit) throws Exception {
-		// 2.2.¶ÁÈ¡Ä£°åÎÄ¼þ
+		// 2.2.ï¿½ï¿½È¡Ä£ï¿½ï¿½ï¿½Ä¼ï¿½
 		BufferedReader br = new BufferedReader(new FileReader(
 				new File(filePath)));
 		String templateString = "";
@@ -110,20 +162,34 @@ public class Helper {
 		return templateString = templateString.trim();
 	}
 	
-	public static String getFileContent(String filePath) throws Exception {
+	public static String getFileContent(String filePath) {
 	
-		return  getFileContent(filePath," ");
+		try {
+			return  getFileContent(filePath," ");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
-	public static String getFileContent(File file) throws Exception {
-		// 2.2.¶ÁÈ¡Ä£°åÎÄ¼þ
-		BufferedReader br = new BufferedReader(new FileReader(file));
+	public static String getFileContent(File file) {
+		// 2.2.ï¿½ï¿½È¡Ä£ï¿½ï¿½ï¿½Ä¼ï¿½
 		String templateString = "";
+		BufferedReader br;
+		try {
+			br = new BufferedReader(new FileReader(file));
+		
+		
 		String line = "";
 		while ((line = br.readLine()) != null) {
 			templateString += " " + line;
 		}
 		br.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return templateString = templateString.trim();
 	}
 
@@ -172,7 +238,7 @@ public class Helper {
 
 	}
 
-	// É¾³ýÎÄ¼þºÍÄ¿Â¼
+	// É¾ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½Ä¿Â¼
 	public static void clearFiles(Object file) {
 		File f = null;
 		if (file != null) {
@@ -208,14 +274,14 @@ public class Helper {
 
 			sql = sql.trim();
 			// System.out.println(sql);
-			// È¥µô select
+			// È¥ï¿½ï¿½ select
 			sql = sql.replaceFirst("^(?i)select\\s", "");
 			// System.out.println(sql);
-			// »ñÈ¡±íÃû
+			// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½
 			String[] filesAtableName = sql.split("(?i)\\sfrom\\s");
 			String tableName = filesAtableName[1].trim();
 			// System.out.println(tableName);
-			// »ñÈ¡×Ö¶ÎÖµ
+			// ï¿½ï¿½È¡ï¿½Ö¶ï¿½Öµ
 			String fields[] = filesAtableName[0].split(",");
 			Arrays.sort(fields);
 			// System.out.println(Arrays.toString(fields));
@@ -226,5 +292,16 @@ public class Helper {
 		return resultSet;
 
 	}
-
+	public static String deleteLastChar(String result) {
+		if(Helper.isNotNull(result)){
+			return result.substring(0, result.length()-1);
+		}
+		return "";
+	}
+	public static String captureName(String name) {
+		name = name.trim().toLowerCase();
+		 char[] cs=name.toCharArray();
+	     cs[0]-=32;
+	     return String.valueOf(cs);
+	}
 }

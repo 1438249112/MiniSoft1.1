@@ -2,15 +2,12 @@ package SFDC2IDP.BASEIDPSQL.MAPPINGHANDLER;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map.Entry;
 
 import SFDC2IDP.BASE.COMMON.CreateSQLFileSolver;
 import SFDC2IDP.BASE.COMMON.Helper;
 import SFDC2IDP.BASE.INTERFACE.IMappingHandler;
 import SFDC2IDP.BASE.INTERFACE.IMappingSolver;
-import SFDC2IDP.BASEIDPSQL.MAPPINGFILESOLVER.MappingSQLFileSolver;
 import SFDC2IDP.BASESFDCEXCEL.MAPPINGFILESOLVER.MappingExeclFileSolver;
-import edu.emory.mathcs.backport.java.util.Arrays;
 
 public class Handle_Mapping_BaseSQL implements IMappingHandler {
 	 
@@ -100,7 +97,7 @@ public class Handle_Mapping_BaseSQL implements IMappingHandler {
 
 	private Handle_Mapping_BaseSQL() {try {
 
-		IMappingSolver FileSolver = new MappingSQLFileSolver();
+		IMappingSolver FileSolver = new MappingExeclFileSolver();
 		HashMap<String, ArrayList<String>> IDPFields = FileSolver.getIDPFields();
 		HashMap<String, ArrayList<String>> SFDCFields = FileSolver.getSFDCFields();
 		HashMap<String, ArrayList<String>> IDPFieldTypes = FileSolver.getIDPFieldTypes();
@@ -199,14 +196,14 @@ public class Handle_Mapping_BaseSQL implements IMappingHandler {
 			if(e.getMessage()!=null && !e.getMessage().equals("")){
 				System.err.println(e.getMessage());
 			}else{
-				System.err.println("½âÎö table "+tableName +" ³öÏÖÒì³£");
+				System.err.println("ï¿½ï¿½ï¿½ï¿½ table "+tableName +" ï¿½ï¿½ï¿½ï¿½ï¿½ì³£");
 			}
 			
 		}
 	}
 	
 	} catch (Exception e) {
-		System.err.println("´¦Àíexcel½âÎöºóµÄÊý¾Ý³ö´í");
+		System.err.println("ï¿½ï¿½ï¿½ï¿½excelï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý³ï¿½ï¿½ï¿½");
 	e.printStackTrace();
 	}}
     /* (non-Javadoc)

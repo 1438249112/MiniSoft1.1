@@ -26,13 +26,13 @@ public class Main_Base_EXCEL {
 		for (Entry<String, String> entry : CONSTANTS.colors.entrySet()) {
 			System.out.println(entry.getKey()+"="+entry.getValue());
 		}
-//		new GenerateDSS_SQL(handle).execute();
-//		Helper.clearFiles(CONSTANTS.LOCAL_Results_BasePath+"/files/");
-//		new GenerateMappingDMC(handle).execute();
-//		new GenerateMappingIn_Schema(handle).execute();
-//		new GenerateMappingOut_Schema(handle).execute();
+		new GenerateDSS_SQL(handle).execute();
+		Helper.clearFiles(CONSTANTS.LOCAL_Results_BasePath+"/files/");
+		new GenerateMappingDMC(handle).execute();
+		new GenerateMappingIn_Schema(handle).execute();
+		new GenerateMappingOut_Schema(handle).execute();
 		new GenerateProxy(handle).execute();
-		new TestProxy(handle).execute();
+//		new TestProxy(handle).execute();
 //		java.awt.Desktop.getDesktop().open(f);
 	}
 }

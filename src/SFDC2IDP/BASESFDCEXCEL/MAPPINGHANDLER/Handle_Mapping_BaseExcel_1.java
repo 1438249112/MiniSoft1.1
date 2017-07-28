@@ -172,6 +172,7 @@ public class Handle_Mapping_BaseExcel_1 implements IMappingHandler {
 					boolean dealed = false;
 					boolean hasCorrectPrase = true;
 					String objectName = tableName2ObjectName.get(tableName);
+					System.out.println("objectName"+objectName);
 					// 1.idp params
 					ArrayList<String> idpFileds = IDPFields.get(tableName);
 					ArrayList<String> idpFieldTypes = IDPFieldTypes

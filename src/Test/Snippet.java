@@ -1,38 +1,36 @@
 package Test;
 
-import java.io.FileReader;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-
-import com.sun.phobos.script.javascript.RhinoScriptEngine;
-import com.sun.phobos.script.javascript.RhinoScriptEngineFactory;
-import com.sun.script.groovy.GroovyScriptEngineFactory;
-import com.sun.script.jruby.JRubyScriptEngineFactory;
-import com.sun.script.jython.JythonScriptEngineFactory;
 
 public class Snippet {
-	public static void main(String[] args) {
-//		  ScriptEngineManager manager = new ScriptEngineManager();
-//	       
-//		    manager.registerEngineExtension("js", new RhinoScriptEngineFactory());
-//	        manager.registerEngineExtension("groovy", new GroovyScriptEngineFactory());
-//	        manager.registerEngineExtension("rb", new JRubyScriptEngineFactory());
-//	        manager.registerEngineExtension("jsEngine", new RhinoScriptEngineFactory());
-//	        manager.registerEngineExtension("py", new JythonScriptEngineFactory());
-//	        ScriptEngine  jsEngine = manager.getEngineByExtension("jsEngine");
-		 try
-	        { 
-			 RhinoScriptEngine ret = new RhinoScriptEngine();
 
-	           Object jsonObject = ret.eval(new FileReader("C:/Users/litsoft/Desktop/test/input1.json"));
-	        }
-	        catch(Exception e)
-	        {
-	        	 System.out.println(e.getLocalizedMessage().toString());
-	        }
-	}
+	public static void main(String[] args) {
+			Date local1970 = new Date();
+			System.out.println("当前时区的格林尼治时间的毫秒数:"+local1970.getTime());
+	//		TimeZone timeBJ = TimeZone.getTimeZone("PRC");//得到北京时间的时区
+			TimeZone timeBJ = TimeZone.getTimeZone("GMT+8");//得到北京时间的时区	
+			String[] strs = timeBJ.getAvailableIDs();
+			for (int i = 0; i < strs.length; i++) {
+				System.out.println("东八区ID:"+strs[i]);
+			}
+			System.out.println(timeBJ.getOffset(local1970.getTime()));
+			//所以如果要获取当地正确的时间
+			TimeZone timeLocal = TimeZone.getTimeZone(getCalendar(local1970).getTimeZone().getID());//得到当前时间的时区	
+			long timeZoneMi= timeLocal.getOffset(local1970.getTime());//当前时间要扣减的毫秒数
+			long date1970 = local1970.getTime() + timeZoneMi;
+			System.out.println("1970年格林威治时间的毫秒数:"+date1970);
+		}
 	
+	 public static Calendar getCalendar(Date date) {  
+	        Calendar cal = Calendar.getInstance();  
+	        cal.setTime(date);  
+	        return cal;  
+	    }
+
+	  Calendar calendar = Calendar.getInstance();      
   
 	 
 }
