@@ -10,7 +10,7 @@ import com.alibaba.fastjson.JSONObject;
 import SFDC2IDP.BASE.COMMON.Helper;
 
 public class createJsonPath {
-private static String path = "E:/lenovo-work/work/PARTS SALES API/doc/20170421/850.json";
+private static String path = "E:/lenovo-work/work/empr_part/parts.json";
 public static void main(String[] args) throws Exception {
  String content	= Helper.getClipOrFileContent(path);
 // System.out.println(content);

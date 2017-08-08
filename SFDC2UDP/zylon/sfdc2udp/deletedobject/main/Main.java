@@ -19,6 +19,20 @@ import com.zylon.utils.WSO2;
 import edu.emory.mathcs.backport.java.util.Arrays;
 
 public class Main {
+	/**
+	 * cpq_ms_ap_approvalrequest_cdl
+cpq_ms_ap_deletedapprovalrequest_cdl
+cpq_ms_ap_deletedlineitem_cdl
+cpq_ms_ap_deletedproductconfigration_cdl
+cpq_ms_ap_deletedproposallineitem_cdl
+cpq_ms_ap_deletedquotation_cdl
+cpq_ms_ap_lineitem_cdl
+cpq_ms_ap_productconfiguration_cdl
+cpq_ms_ap_proposallineitem_cdl
+cpq_ms_ap_quotation_cdl
+
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		String infos = "na_Apttus_Approval__Approval_Request__c|cpq_ms_na_deletedapprovalrequest_idl,"
 				+ "na_Apttus_Config2__Lineitem__c|cpq_ms_na_deletedlineitem_idl,"
@@ -59,7 +73,7 @@ public class Main {
 			  .append("}");
 			  
 			String variables = "SFDC2UDP_DELETED_OBJECTS_SYNC/variables/";
-				WSO2.write(variables+module.toLowerCase().trim()+"/query.global.latestdate.txt", "2017-06-19T23:56:00.000Z");
+				WSO2.write(variables+module.toLowerCase().trim()+"/query.global.latestdate.txt", "2017-07-19T23:56:00.000Z");
 				WSO2.write(variables+module.toLowerCase().trim()+"/query.global.info.txt",stringBuff.toString());
 
 			try{

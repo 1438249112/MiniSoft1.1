@@ -62,7 +62,7 @@ public class Main {
 				// System.out.println(csvFields);
 				if (csvFields != null && objFields != null) {
 					HashMap<String, String> result = getResult(objFields, csvFields);
-					System.out.println("SFDC2UDP_OBJECTS_SYNC_" + result.get("region").toUpperCase() + "_"
+				/*	System.out.println("SFDC2UDP_OBJECTS_SYNC_" + result.get("region").toUpperCase() + "_"
 							+ result.get("objectRealName"));
 
 					System.out.println("http://elb.wso2.lenovo.com:8080/esb/services/SFDC2UDP_OBJECTS_SYNC?region="
@@ -75,6 +75,8 @@ public class Main {
 					WSO2.write(variables + result.get("moduleName") + "/query.global.latestdate.txt",
 							"2017-07-01T00:00:00.000Z");
 					WSO2.write(variables + result.get("moduleName") + "/queryLocator.txt", "null");
+					
+					*/
 					//
 					// try {
 					// Thread.currentThread().sleep(3000);
@@ -82,8 +84,7 @@ public class Main {
 					// // TODO Auto-generated catch block
 					// e.printStackTrace();
 					// }
-					String[] fileds = getFields(WSO2.triggerGET(
-							"SFDC2UDP_OBJECTS_SYNC?region=" + result.get("region") + "&object=" + result.get("object")));
+					
 					// if(fileds==null||fileds.length==0){
 					// System.err.println(fileName+" can't get a success
 					// response.");
@@ -149,12 +150,13 @@ public class Main {
 		String object = excel.getValue(objFields.get(0)).trim().split(":")[1].trim();
 		String pathSource = excel.getValue(csvFields.get(0)).trim();
 		String path = "";
-		System.out.println("pathSource="+pathSource);
+	
 		if (pathSource.contains(".")) {
 			path = pathSource.split("\\.")[1].trim();
 		} else {
 			path = pathSource.split(":")[1].trim();
 		}
+		System.out.println(path);
 		String sfdc_user_name = "";
 		if (region.contains("ap")) {
 			sfdc_user_name = "b2b.integration@lenovo.com.full";
